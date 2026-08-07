@@ -8,27 +8,32 @@ description: >
   "client report", "audit and strategy for [client]", or says something like "we've
   got a new client, create their marketing plan". Produces a Word (.docx) document
   matching Purple Giraffe's exact brand styles, header/footer, and the audit →
-  strategy → actions structure used in real delivered MAPs. For a lighter-weight,
-  non-branded, ad-hoc report spanning a couple of marketing areas, use
-  marketing-beast instead — this skill is specifically for the formal client
-  deliverable.
+  strategy → actions structure used in Purple Giraffe's actual master MAP template.
+  For a lighter-weight, non-branded, ad-hoc report spanning a couple of marketing
+  areas, use marketing-beast instead — this skill is specifically for the formal
+  client deliverable.
 ---
 
 # Marketing Action Plan (Purple Giraffe consultant)
 
 Produces a Purple Giraffe-branded, client-ready Marketing Action Plan as a `.docx`,
-following the exact structure and style of real delivered MAPs (Duco Limited, History
-Trust of South Australia) and grounded in Purple Giraffe's actual service offerings
-and constraints.
+built directly from Purple Giraffe's real master template and its founder's own
+documented process for completing one.
 
 Read these references before drafting, in this order:
-1. `references/service-context.md` — who Purple Giraffe is, what it sells, commercial
-   constraints, known gaps. Keeps recommendations realistic and internally consistent.
-2. `references/map-structure.md` — the canonical document skeleton, the repeating
-   Audit → Strategy → Actions unit, which sections are always-included vs. conditional
-   on client type.
-3. `references/brand-style-guide.md` — exact colours, fonts, and named Word styles to
-   apply, plus the docx editing workflow.
+1. `references/service-context.md` — the real research/build workflow, the tools
+   consultants actually use (SEMrush, ChatGPT for GEO, PageSpeed Insights, direct
+   platform access), typical time/depth, and hard data-sourcing rules.
+2. `references/map-structure.md` — the canonical document skeleton (Purple Giraffe's
+   actual build order and section list), the repeating Audit → Strategy → Actions
+   unit, and the exact delete-if-not-applicable list.
+3. `references/section-playbook.md` — section-by-section guidance (what to review,
+   what tools/resources each section needs) distilled from the template author's own
+   instructions.
+4. `references/social-media-checklists.md` — exact per-platform audit checklists
+   (Facebook, Instagram, X, LinkedIn, YouTube).
+5. `references/brand-style-guide.md` — exact colours, fonts, named Word styles, the
+   template's real header/footer/section structure, and the docx editing workflow.
 
 ## Step 1 — Intake
 
@@ -36,94 +41,106 @@ Collect from the user (ask only for what's genuinely missing, don't block on
 everything):
 - Client name, industry/sector, and a short description of what they do
 - Client website URL (if any) — needed for the digital media audit
-- Known competitors, or permission to identify them via research
-- Anything the client has already told Purple Giraffe about goals, budget, target
-  market, or pain points
-- Client type signals that affect which conditional sections apply — public
-  sector/not-for-profit (→ ESG, Public value, Accessibility, DEI), multi-brand
-  portfolio (→ brand hierarchy handling), simple single-entity commercial (→ lean plan)
+- **Known competitors** — these must come from the client/user, never invented
+  (Purple Giraffe's own rule — see `service-context.md`)
+- Whether the client already has a business plan or existing research to feed in
+  directly (faster and more accurate than building industry research from scratch)
+- Whether this MAP accompanies an ongoing Purple Giraffe retainer engagement (only
+  then does the "Marketing investment" section apply)
+- Client type signals that affect which conditional sections/topics apply — see the
+  delete-if-not-applicable list in `map-structure.md` (industry-specific modules,
+  ESG/DEI/accessibility, which social platforms are even active, etc.)
 
 If the client has a URL, do not skip straight to writing — run real evidence
-collection first (Step 2). A MAP with fabricated metrics is a real failure mode seen
-in the source proposal template (see `service-context.md`) — don't repeat it.
+collection first (Step 2). A MAP with fabricated metrics or invented competitors is
+the single most avoidable failure mode here — don't produce one.
 
-## Step 2 — Research and evidence collection
+## Step 2 — Delete what doesn't apply, then research
 
-Use the installed skills as the analytical engine — don't re-derive their expertise
-here:
+Per Purple Giraffe's own process: first strip the template down to what's relevant
+to this client (industry-specific modules, unused social platforms, optional
+sections) before filling anything in — this keeps drafting focused and avoids
+half-filled irrelevant sections.
+
+Then collect evidence, using the installed skills as the analytical engine:
 
 - **Website/technical/SEO audit**: use the `seo` skill's scripts directly for
   deterministic evidence (`fetch_page.py`, `parse_html.py`, `robots_checker.py`,
   `pagespeed.py`, `security_headers.py`, `broken_links.py`, `social_meta.py`,
-  `internal_links.py`) — these feed the Digital media → Websites and SEO content
-  sections.
-- **AI search / GEO readiness**: `ai-seo` skill — feeds a "SEO & GEO" callout inside
-  Digital media if relevant to the client's sector.
-- **Competitor research**: `competitor-profiling` for deep dossiers on named
-  competitors, `competitors` skill's framing for how to structure the comparison.
-  Competitor URLs must come from the user or genuine web research — never invented.
+  `internal_links.py`) — these feed the Website and SEO content sections. Purple
+  Giraffe's own process uses SEMrush + Google PageSpeed Insights for the same job;
+  use the closest available equivalent and say which you used.
+- **AI search / GEO readiness**: `ai-seo` skill — feeds the GEO content section.
+- **Competitor research**: `competitor-profiling` for dossiers on the client's named
+  top 3 competitors (never more, never invented — see `section-playbook.md`).
 - **Industry research**: use web search for sector trends, regulatory environment,
-  market size/growth — cite real, checkable sources exactly as both real MAPs do
-  (numbered footnotes to real URLs). This feeds Appendix 1.
+  market size/growth — cite real, checkable sources. This feeds About → Industry
+  research and insights (client-facing summary) and Appendix 1 (full detail).
 - **Positioning/ICP**: `product-marketing` skill if `.agents/product-marketing.md`
   doesn't already exist for this client.
-- **Social media audit**: check the client's actual social platforms (followers, post
-  frequency, content themes, engagement) rather than guessing.
-- **Analytics**: if the client has shared GA4/GSC access or exported data, use it
-  directly; otherwise mark those KPI rows "Baseline to be established" per
-  `map-structure.md`'s rule against fabricated metrics.
+- **Social media audit**: check the client's actual social platforms per
+  `social-media-checklists.md` — audit only, no strategy yet.
+- **Analytics**: if the client has shared GA4/GSC/social-insights access or exported
+  data, use it directly; otherwise mark those KPI rows "Baseline to be established" —
+  never fabricate a number.
 
 Bound this like the `seo` skill does: retry a failed evidence source once, then
 finalize with that item marked an environment/data limitation rather than looping.
 
-## Step 3 — Draft the content
+## Step 3 — Draft the content (in Purple Giraffe's real build order)
 
-Follow `map-structure.md` section by section. For every "Marketing audit, strategy and
-actions" topic, always produce the repeating unit in order: `[Topic]` → **Audit**
-(current-state only, evidence-backed) → **Strategy** (recommended direction) →
-**`[Topic] actions`** (concrete, assignable bullets). Include only the topics relevant
-to this client — don't force every topic from the reference list into every plan.
+Per the template author's own instructions, draft in this order, not top-to-bottom
+reading order:
+
+1. Current Marketing Audit (all of it — traditional + digital, per
+   `section-playbook.md`)
+2. About
+3. Brand Strategy (Branding and positioning, through Point of difference)
+4. Marketing Strategy (the Strategy paragraphs across every audited topic)
+5. Marketing Activity Plan (the Actions callout boxes)
+6. Marketing Strategy on a page (executive summary — can only be written once the
+   above exists)
+7. Marketing Calendar (consolidate every action bullet into the Qtr1–4 table)
+8. Marketing Strategy roadmap (the Q1–Q4 goals-and-steps summary)
+9. Table of Contents (regenerate/update last, once headings are final)
+
+For every "Marketing audit, strategy and actions" topic, always produce the
+repeating unit in order: `[Topic]` → **Audit** (current-state only, evidence-backed)
+→ **Strategy** (recommended direction — only where warranted) → **`[Topic] actions`**
+(concrete, assignable bullets, styled `PGAction`/`PGActionbullets`). Every action
+bullet must also appear in the calendar, and vice versa.
 
 Cross-check against `service-context.md` as you draft:
-- Don't recommend a channel/service PG doesn't offer without flagging it as a gap.
-- Respect the 3-month minimum on paid/social/SEO retainers when recommending timelines.
-- Never include PG's own service fees in the MAP — a MAP is strategy for the client's
-  marketing, not a PG sales proposal.
-
-Build the Marketing and communication calendar of activities last, once all actions
-are finalized — every action bullet from every callout box must appear in the
-calendar, and nothing should appear in the calendar that isn't backed by an action
-bullet.
+- Don't recommend a channel/topic that was deleted in Step 2.
+- Only include a "Marketing investment" section if this MAP supports an ongoing PG
+  retainer — otherwise it doesn't exist in this document at all.
+- KPIs need a timeframe and must be achievable — not aspirational fantasy numbers.
 
 ## Step 4 — Produce the branded `.docx`
 
-Follow `brand-style-guide.md`'s workflow exactly:
-1. Copy `assets/PG-MAP-reference-template.docx` to the client's output filename.
-2. Use the docx skill's **editing an existing document** path (unzip →
-   edit `word/document.xml` → rezip) — not create-from-scratch — so the existing named
-   styles (`PGHeading1/2/3`, `PGBodycopy`, `PGAction`, `PGActionbullets`,
-   `PGTableheading`, `PGTabletext`, `PGBullets`, `PGHyperlink`), header/footer images,
-   and cover page survive intact.
-3. Update the cover page (client name/logo, date) and the running header
-   (`header2.xml`) with the client name.
-4. Replace body content, referencing existing style IDs only — never invent new
-   formatting.
-5. Verify with `soffice --headless --convert-to pdf` + `pdftoppm`, then visually
-   check several pages (cover, a KPI table, an actions callout box, the calendar)
-   against the style guide before calling it done.
+Follow `brand-style-guide.md`'s workflow exactly — copy the real master template,
+edit it in place (unzip → edit XML → rezip), fill sections per Steps 2–3, delete
+whatever doesn't apply, update every placeholder occurrence across `document.xml`
+and all header parts, then **strip every Word comment and instructional blue-text
+placeholder** before rezipping. This last step is Purple Giraffe's own hard rule,
+not optional cleanup.
 
 ## Step 5 — Pre-delivery QA
 
 Before presenting the finished MAP, check:
-- No leftover placeholder text, no other client's name/data anywhere in the document
-  (a real failure mode found in Purple Giraffe's own proposal template).
+- **No Word comments and no blue instructional/placeholder text remain anywhere** —
+  this is the single most important check per Purple Giraffe's own process.
+- No leftover placeholder text or another client's name/data anywhere in the
+  document.
 - Every action box bullet appears in the calendar and vice versa.
-- No fabricated metrics — every number is either sourced from real evidence collected
-  in Step 2 or explicitly marked "Baseline to be established"/"TBC".
-- No PG service pricing anywhere in the document.
-- Conditional sections match the client type (don't include ESG/DEI/Accessibility for
-  a small private commercial client; don't omit them for a public-sector client if
-  relevant).
+- No fabricated metrics or invented competitors — every number/competitor is either
+  sourced from real evidence/client input or explicitly marked "Baseline to be
+  established"/"TBC".
+- "Marketing investment" section present only if this is an ongoing PG engagement.
+- Deleted sections were actually removed, not just left blank.
+- Document is Arial throughout; images (if any) are reasonably sized, don't crowd
+  the footer or the PG giraffe mark.
 
-Then tell the user exactly what was produced, the file path, and explicitly list any
-KPIs/sections marked as needing a baseline or further client input.
+Then tell the user exactly what was produced, the file path, which sections were
+deleted as not applicable, and explicitly list any KPIs/sections marked as needing
+a baseline or further client input.

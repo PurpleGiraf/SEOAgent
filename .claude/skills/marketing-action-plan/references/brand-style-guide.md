@@ -5,14 +5,17 @@ Extracted directly from the OOXML of a real, delivered Marketing Action Plan. Th
 are exact values, not visual approximations — use them verbatim when generating or
 editing a MAP.
 
-`assets/PG-MAP-reference-template.docx` is a **stripped skeleton**, not the original
-worked example — all client-specific content (business detail, audit findings, SWOT,
-competitor data, KPI targets) has been removed and replaced with generic placeholder
-text, since the source document was a real client's confidential MAP. What survives
-intact: every named paragraph/table style, the header/footer (including the contact
-bar images), the cover-page structure, and one example of each content pattern
-(heading hierarchy, Audit/Strategy/Actions unit, KPI table, calendar table). Use it as
-a formatting reference and a starting point to duplicate — never as source content.
+`assets/PG-MAP-reference-template.docx` is Purple Giraffe's **actual master MAP
+template** — the real file consultants copy into a client folder and rename to start
+a new MAP. It contains no client data, only placeholder text (`<Insert company name
+here>`, `BUSINESS NAME`, etc.) and Word comments with Lynda Schenk's (founder)
+instructions for completing each section. See `section-playbook.md` and
+`map-structure.md` for that guidance distilled into this skill's own workflow.
+
+**Before delivering a MAP built from this template**: every blue instructional
+comment/placeholder must be actioned and deleted — see `service-context.md`'s
+formatting rule. Never send a client a document with template comments still
+attached.
 
 ## Colours (hex)
 
@@ -71,21 +74,52 @@ Only ever add new paragraphs/tables that *reference* the existing style IDs.
 - Cover page uses a different, simpler header/footer pair (`header1.xml`/`footer2.xml`)
   with no running text.
 
+## Header/footer structure (real master template)
+
+The master template uses **Different First Page** plus later section breaks,
+not a simple two-section cover/content split:
+
+- Page 1 (cover) uses `header3`/`footer3` (the "first" header/footer).
+- The rest of the first section uses `header2`/`footer2` (the "default"
+  header/footer — this carries the running `<Client> | Marketing action
+  plan | page N` text).
+- `header1`/`footer1` are the "even" page variants (present for
+  double-sided printing support; leave as-is).
+- Later sections (the document has 5 total, reflecting historical section
+  breaks around the audit/digital-media/appendix content) reference
+  `header4`, `header5`, `header6`, and `footer4`, `footer5` — leave their
+  `headerReference`/`footerReference` wiring untouched; only edit the
+  **text content** inside each header/footer XML part, never the section
+  structure itself.
+
 ## Workflow for producing a new MAP as a branded .docx
 
 Follow the **docx skill's "editing an existing document" path** (unzip → edit
 `word/document.xml` → rezip), not the docx-js "create from scratch" path — creating
-from scratch cannot reproduce these named styles, the header/footer images, or the
-cover page layout.
+from scratch cannot reproduce these named styles, the header/footer images, the
+section structure above, or the cover page layout.
 
 1. Copy `assets/PG-MAP-reference-template.docx` to the new client's output filename.
-2. Unpack it (`unzip`), strip symlink entries per the docx skill's guidance (untrusted
-   external party file handling doesn't apply here since this is our own asset, but
-   still follow the unzip/edit/rezip mechanics exactly).
-3. Replace the cover page client name/logo and title/date.
-4. Replace the TOC and all body content in `word/document.xml`, but reuse every
-   `w:pStyle`/table style referenced above — do not introduce new formatting.
-5. Update `header2.xml`'s running client name.
-6. Rezip, then verify with `soffice --headless --convert-to pdf` +
+2. Unpack it (`unzip`), strip symlink entries per the docx skill's guidance.
+3. Replace the cover page client name/logo and title/date (`<Insert company name
+   here>` placeholders).
+4. Fill in body content section by section per `map-structure.md` and
+   `section-playbook.md`, reusing existing `w:pStyle`/table styles only —
+   never introduce new formatting. **Delete every section that doesn't apply
+   to this client** (see the delete-if-not-applicable list in
+   `map-structure.md`) rather than leaving it blank.
+5. Update every `<Client name>`/`BUSINESS NAME`/`COMPANY NAME` placeholder
+   occurrence across `document.xml` **and** every header part
+   (`header1.xml`–`header6.xml`) — grep for the placeholder strings to find
+   them all rather than assuming they're only in the running header.
+6. **Strip every Word comment and its anchor markers** (`word/comments.xml`,
+   `commentsExtended.xml`, `commentsIds.xml`, `commentsExtensible.xml`, and
+   the `<w:commentRangeStart>`/`<w:commentRangeEnd>`/`<w:commentReference>`
+   markers in `document.xml`) before delivery — this is Purple Giraffe's own
+   hard rule (see `service-context.md`), not optional cleanup. A MAP with
+   template comments still attached has not been finished.
+7. Rezip, then verify with `soffice --headless --convert-to pdf` +
    `pdftoppm` and visually check a handful of pages against this guide before
-   delivering.
+   delivering. If PDF conversion isn't available in the runtime environment,
+   validate via OOXML schema validation and a full read-back instead, and
+   say so explicitly rather than claiming a visual check happened.
