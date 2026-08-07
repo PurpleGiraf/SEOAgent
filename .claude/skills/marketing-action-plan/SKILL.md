@@ -18,7 +18,20 @@ description: >
 
 Produces a Purple Giraffe-branded, client-ready Marketing Action Plan as a `.docx`,
 built directly from Purple Giraffe's real master template and its founder's own
-documented process for completing one.
+documented process.
+
+## Agent pool (for automated/batch builds)
+
+For a full end-to-end build from a validated client discovery-form submission
+(e.g. intake landing from Supabase), delegate to the `map-orchestrator` agent
+(`.claude/agents/map-orchestrator.md`) instead of running this skill's steps
+manually — it sequences the 12 specialist agents in `.claude/agents/map-*.md`
+(research → synthesis → assembly → QA) in the correct dependency order and
+stops for human sign-off before delivery. Use the manual steps below when
+working a single MAP interactively in conversation, editing an existing MAP,
+or when no orchestrator/agent pool is available.
+
+## Manual workflow
 
 Read these references before drafting, in this order:
 1. `references/service-context.md` — the real research/build workflow, the tools
