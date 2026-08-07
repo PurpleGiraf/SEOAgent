@@ -34,17 +34,27 @@ Read these references before drafting, in this order:
    (Facebook, Instagram, X, LinkedIn, YouTube).
 5. `references/brand-style-guide.md` — exact colours, fonts, named Word styles, the
    template's real header/footer/section structure, and the docx editing workflow.
+6. `references/discovery-questions.md` — Purple Giraffe's real client discovery
+   questionnaire (`assets/PG-MAP-discovery-questions.pdf`), mapped to where each
+   answer feeds the MAP. This is the actual intake checklist — use it for Step 1.
 
 ## Step 1 — Intake
 
-Collect from the user (ask only for what's genuinely missing, don't block on
-everything):
-- Client name, industry/sector, and a short description of what they do
-- Client website URL (if any) — needed for the digital media audit
-- **Known competitors** — these must come from the client/user, never invented
-  (Purple Giraffe's own rule — see `service-context.md`)
-- Whether the client already has a business plan or existing research to feed in
-  directly (faster and more accurate than building industry research from scratch)
+Work through `references/discovery-questions.md` (Purple Giraffe's real discovery
+questionnaire) against what the user has already told you, and ask for what's
+genuinely missing — don't block on items that are optional or that you can source
+yourself:
+- Business/organisation basics: mission, vision, values, business goals, what
+  success looks like, USP, company history in their own words, positioning
+- **Known competitors** — must come from the client/user, never invented or
+  inferred (Purple Giraffe's own rule — see `service-context.md`)
+- Whether the client already has a business plan or industry data to share
+  (feed it in directly — faster and more accurate than researching from scratch)
+- Channels to market, sales % by channel, sales % by product/service, target
+  market segments and desired future split
+- Brand collateral (style guide, language guide) and platform access (social,
+  Google Analytics, website, EDM, CRM) — use directly wherever available; treat
+  website/CRM access as nice-to-have, not blocking
 - Whether this MAP accompanies an ongoing Purple Giraffe retainer engagement (only
   then does the "Marketing investment" section apply)
 - Client type signals that affect which conditional sections/topics apply — see the
