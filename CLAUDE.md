@@ -9,13 +9,31 @@ instead of restating it.
 
 ## Current build status
 
-**Phase 1 (built)**: Agency Lead, Client Intelligence, Researcher,
-Strategist, Content, Brand QA. This is the reliable core loop:
-request → research → strategy → content → QA → human approval.
+**All 12 agents are built.** Phase 1 (the core loop — Agency Lead, Client
+Intelligence, Researcher, Strategist, Content, Brand QA) and Phase 2/3
+(Account Manager, Social, Search Visibility, Paid Media, Creative
+Director, Analytics & Reporting) all exist under `.claude/agents/`.
 
-**Not yet built** (add only once Phase 1 is proven reliable, per the
-team spec): Account Manager, Social, Search Visibility, Paid Media,
-Creative Director, Analytics & Reporting.
+The spec's own guidance was to prove Phase 1 reliably before adding the
+rest — that validation hasn't happened yet, so treat the Phase 2/3 agents
+as built-but-unproven: their file structure, rules, and handoffs follow
+the same conventions as Phase 1, but they haven't been exercised on a real
+task. Test the full chain (a dummy client request through Agency Lead)
+before relying on this for real client work, and expect to tighten
+individual agent files once real usage surfaces gaps.
+
+Several Phase 2/3 agents are recommendation-first by design regardless of
+testing status — `paid-media` never spends money, `content`/`social`
+never publish — that's a permanent property (see Human Approval Model
+below), not a temporary limitation to relax once proven.
+
+**Connector status**: `account-manager` and `creative` have live tool
+access (ClickUp, Canva) since those are already connected in this
+environment. `search`, `paid-media`, and `analytics` are written to
+degrade gracefully to client-provided exports until GA4/Search
+Console/Google Ads/Meta/LinkedIn/SEMrush connectors are added (see spec
+Section 17 for the planned integration list) — don't assume they have
+live platform access.
 
 **Relationship to the MAP agent pool**: `.claude/agents/map-*.md` is a
 separate, deep specialist pipeline for producing Purple Giraffe's branded
