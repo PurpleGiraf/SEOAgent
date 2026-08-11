@@ -1,0 +1,16 @@
+# Client Brain — real client knowledge is confidential and not yet backed by
+# Supabase, so it stays local-only until that migration happens. Keep the
+# _TEMPLATE folder tracked so the expected structure ships with the repo.
+clients/*
+!clients/_TEMPLATE/
+!clients/_TEMPLATE/**
+
+# Working directories agents write into during a session — not deliverables.
+campaigns/*
+research/*
+reports/*
+approvals/*
+!campaigns/.gitkeep
+!research/.gitkeep
+!reports/.gitkeep
+!approvals/.gitkeep
