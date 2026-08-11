@@ -28,27 +28,35 @@ Analytics) remain untested until each has run on a real task.
 
 ## Orchestration constraint — read before invoking agency-lead or map-orchestrator
 
-**Subagents in this environment cannot themselves spawn further
-subagents.** The `Agent` tool only works from the top-level session —
-declaring it in a subagent's `tools:` frontmatter does not make it usable
-once that agent is itself running as a nested subagent. This was confirmed
-by the first dry run: `agency-lead`, invoked as a subagent, could not
-dispatch `client-intelligence`/`researcher`/`strategist`/`content`/
-`brand-qa` as separate agents despite having `Agent` declared, and instead
-executed each one's role itself by following their `.claude/agents/*.md`
-files directly.
+**No subagent in this environment can dispatch further subagents — ever,
+regardless of how it was invoked.** The `Agent` tool is only available to
+the top-level session (the actual conversation a human is having with
+Claude Code). A first dry run found `agency-lead` invoked as a subagent
+had no working `Agent` access despite it being declared in `tools:`; a
+second test invoked `agency-lead` **directly from the top-level session**
+specifically to check whether that changed anything — it didn't. The
+subagent's tool set that run was `Read, Write, Edit, Grep, Glob, Skill`
+with no `Agent` tool present at all, regardless of invocation depth. This
+rules out the "nested vs. top-level dispatch" distinction the first fix
+assumed — there is no dispatch mode available to `agency-lead` or
+`map-orchestrator` once either is running as a subagent, full stop.
 
-Practical effect: true multi-agent dispatch (each specialist running in
-its own isolated context, genuinely independent QA review, etc.) only
-happens when `agency-lead` or `map-orchestrator` is invoked **directly
-from the top-level session** — a human talking to Claude Code, not
-something already delegated one layer deep. Both orchestrator files now
-document a fallback "nested mode" where they self-execute each phase
-faithfully instead of silently pretending a dispatch happened, and both
-state in their final output which mode they ran in. Treat "nested mode"
-output as lower-confidence on independence between phases (e.g. Brand QA
-reviewing its own reasoning rather than a separate agent's) even though
-the content rules were still followed correctly.
+Practical effect: **genuine multi-agent coordination — each specialist
+running in its own isolated context, independent QA review that isn't the
+same context grading its own work — can only happen if the top-level
+session itself calls each specialist agent directly** (`client-intelligence`,
+then `researcher`, then `strategist`, then `content`, then `brand-qa`, in
+order), using `agency-lead`'s Responsibilities section as the plan to
+follow. `agency-lead` and `map-orchestrator`, whenever invoked via the
+`Agent` tool as a subagent, always self-execute every phase in one process
+by reading and following each named specialist's `.claude/agents/*.md`
+file in turn — this is not a fallback for an edge case, it is the only
+mode that exists for either orchestrator once dispatched as a subagent.
+Both still enforce the same dependency ordering and rules internally, and
+both state plainly in their output that no real isolation between phases
+occurred. If independent phase isolation genuinely matters for a task,
+don't invoke `agency-lead`/`map-orchestrator` as a subagent at all — drive
+the sequence from the top-level session instead.
 
 Several Phase 2/3 agents are recommendation-first by design regardless of
 testing status — `paid-media` never spends money, `content`/`social`
