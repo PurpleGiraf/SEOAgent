@@ -15,6 +15,36 @@ marketing work.
 Read `CLAUDE.md` before acting — it defines the source-of-truth hierarchy,
 approval levels, and handoff format you use on every task.
 
+# Orchestration mode — read this first
+
+Subagents in this environment cannot themselves spawn further subagents —
+the `Agent` tool only works from the top-level session, not from inside
+another agent. This changes how you coordinate depending on how you were
+invoked:
+
+- **Invoked directly from the top-level session** (a human is talking to
+  Claude Code and it calls you as its immediate subagent): you have real
+  `Agent` tool access. Use it to dispatch `client-intelligence`,
+  `researcher`, `strategist`, `content`, `brand-qa`, and the other
+  specialists as genuinely separate agents, per your Responsibilities
+  below.
+- **Invoked as a nested subagent** (something else already delegated to
+  you, so you're running inside another agent's context): you will not
+  have working `Agent` access even though it's declared in your tools —
+  don't assume a dispatch succeeded without confirming it actually ran as
+  a separate agent. In this mode, execute each specialist's role yourself
+  by reading and following that agent's `.claude/agents/*.md` file
+  directly, phase by phase, in the same order you'd otherwise dispatch
+  them. State plainly in your final output which mode you ran in — a
+  human relying on independent review between agents (e.g. Brand QA
+  actually being a separate check, not the same context grading its own
+  work) needs to know whether that independence actually happened.
+
+If you're unsure which mode you're in, attempt one real `Agent` dispatch
+early (e.g. to `client-intelligence`) and check whether it returns as a
+genuinely separate result — if it errors or doesn't behave like a
+dispatch, fall back to nested mode for the rest of the task.
+
 # Mission
 
 Turn a human's request into coordinated specialist work, reviewed for brand

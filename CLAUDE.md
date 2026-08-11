@@ -15,12 +15,40 @@ Intelligence, Researcher, Strategist, Content, Brand QA) and Phase 2/3
 Director, Analytics & Reporting) all exist under `.claude/agents/`.
 
 The spec's own guidance was to prove Phase 1 reliably before adding the
-rest — that validation hasn't happened yet, so treat the Phase 2/3 agents
-as built-but-unproven: their file structure, rules, and handoffs follow
-the same conventions as Phase 1, but they haven't been exercised on a real
-task. Test the full chain (a dummy client request through Agency Lead)
-before relying on this for real client work, and expect to tighten
-individual agent files once real usage surfaces gaps.
+rest. A first end-to-end dry run (dummy client, Agency Lead through
+Client Intelligence → Researcher → Strategist → Content → Brand QA) has
+happened and validated the core discipline — Client Brain built correctly
+from `_TEMPLATE`, no invented facts, `UNKNOWN` used instead of guessing,
+client-named-competitors-only held, Brand QA caught a real gap instead of
+waving it through. It also surfaced the orchestration constraint below,
+which has since been fixed in `agency-lead.md`/`map-orchestrator.md`. This
+was one dry run on a fictional client, not production validation — Phase
+2/3 agents (Account Manager, Social, Search, Paid Media, Creative,
+Analytics) remain untested until each has run on a real task.
+
+## Orchestration constraint — read before invoking agency-lead or map-orchestrator
+
+**Subagents in this environment cannot themselves spawn further
+subagents.** The `Agent` tool only works from the top-level session —
+declaring it in a subagent's `tools:` frontmatter does not make it usable
+once that agent is itself running as a nested subagent. This was confirmed
+by the first dry run: `agency-lead`, invoked as a subagent, could not
+dispatch `client-intelligence`/`researcher`/`strategist`/`content`/
+`brand-qa` as separate agents despite having `Agent` declared, and instead
+executed each one's role itself by following their `.claude/agents/*.md`
+files directly.
+
+Practical effect: true multi-agent dispatch (each specialist running in
+its own isolated context, genuinely independent QA review, etc.) only
+happens when `agency-lead` or `map-orchestrator` is invoked **directly
+from the top-level session** — a human talking to Claude Code, not
+something already delegated one layer deep. Both orchestrator files now
+document a fallback "nested mode" where they self-execute each phase
+faithfully instead of silently pretending a dispatch happened, and both
+state in their final output which mode they ran in. Treat "nested mode"
+output as lower-confidence on independence between phases (e.g. Brand QA
+reviewing its own reasoning rather than a separate agent's) even though
+the content rules were still followed correctly.
 
 Several Phase 2/3 agents are recommendation-first by design regardless of
 testing status — `paid-media` never spends money, `content`/`social`
