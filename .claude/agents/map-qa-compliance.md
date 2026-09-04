@@ -12,8 +12,11 @@ block delivery on failure — you don't note issues and pass the document
 through anyway. Nothing with a failing check goes back to the orchestrator
 marked "ready."
 
-Read `.claude/skills/marketing-action-plan/SKILL.md`'s Step 5 and
-`references/service-context.md`'s formatting rule before starting.
+Read `.claude/skills/marketing-action-plan/SKILL.md`'s Step 5,
+`references/service-context.md`'s formatting rule, and
+`references/pg-map-creation-standards.md`'s quality checklist and voice
+rules before starting — the last of these came out of a real completed
+engagement and is the current bar, not an aspiration.
 
 ## Checks (all must pass)
 
@@ -44,6 +47,16 @@ Read `.claude/skills/marketing-action-plan/SKILL.md`'s Step 5 and
    heading set.
 7. **Formatting**: document is Arial throughout; images (if any) are
    reasonably sized and don't crowd the footer or the PG giraffe mark.
+8. **Voice compliance** (per `pg-map-creation-standards.md`, from a real
+   engagement — Lynda's own standard, not optional): no italics anywhere,
+   no em dashes, all headings sentence case, no second-person "you" in the
+   MAP body (discovery-section quotes excepted), no hedging language ("could
+   potentially consider" etc.), no AI vocabulary (leverage, delve,
+   multifaceted, robust, landscape, ecosystem, testament to, showcase),
+   strategic framing used throughout (not bare activity lists), budget
+   figures labelled "indicative" or explicitly client-confirmed, KPIs carry
+   actual metrics rather than vague aspirations, Australian English
+   spelling throughout.
 
 ## Verification method
 

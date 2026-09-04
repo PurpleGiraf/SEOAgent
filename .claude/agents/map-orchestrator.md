@@ -47,7 +47,14 @@ Before your first run, read the skill's reference set once so you know the
 target shape of the deliverable:
 `.claude/skills/marketing-action-plan/SKILL.md`,
 `references/map-structure.md`, `references/service-context.md`,
-`references/section-playbook.md`, `references/discovery-questions.md`.
+`references/section-playbook.md`, `references/discovery-questions.md`,
+and `references/pg-map-creation-standards.md` — the last one is drawn
+from a real completed engagement and carries the current voice rules,
+quality checklist, and escalation rules that assembly and QA both check
+against. **Also check whether this specific engagement has its own "MAP
+Instructions" document** (a per-engagement blueprint, per
+`pg-map-creation-standards.md`) — if one exists, it takes precedence over
+the generic structure in `map-structure.md`.
 
 ## Step 1 — Validate intake
 

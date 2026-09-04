@@ -1,18 +1,66 @@
 # Purple Giraffe — AI Agent Team
 
 This repo hosts Purple Giraffe's Claude-based agency agent team, alongside
-the existing marketing skill library (`.claude/skills/`) and the
-`marketing-action-plan` MAP-build agent pool (`.claude/agents/map-*.md`).
-This file defines the operating rules shared across every agent in the
-agency team — individual agent files (`.claude/agents/*.md`) reference this
-instead of restating it.
+the existing marketing skill library (`.claude/skills/`) and three
+dedicated deliverable pools: the `marketing-action-plan` MAP-build agent
+pool (`.claude/agents/map-*.md`), a standalone SEO/AEO/GEO audit team
+(`seo-*`/`aeo-geo-auditor`), an AI visibility check team (`ai-visibility-*`),
+and an FAQ generation team (`faq-*`). This file defines the operating
+rules shared across every agent in the agency team — individual agent
+files (`.claude/agents/*.md`) reference this instead of restating it.
 
 ## Current build status
 
-**16 agent files** under `.claude/agents/` — 12 agency-team roles, 4 of
-which double as MAP pipeline agents (see "Consolidated agents" below), plus
-4 MAP-only mechanical agents (orchestrator, actions/calendar, document
-assembly, QA gate) with no agency-team equivalent.
+**29 agent files** under `.claude/agents/`:
+
+- **12 agency-team roles** (general client work), 4 of which double as
+  MAP pipeline agents in MAP mode (see "Consolidated agents" below)
+- **4 MAP-only mechanical agents** (orchestrator, actions/calendar,
+  document assembly, QA gate) with no agency-team equivalent
+- **5-agent SEO/AEO/GEO audit team** — a standalone deep audit
+  deliverable (`seo-audit-orchestrator` → `seo-technical-onpage-auditor` +
+  `aeo-geo-auditor` + `seo-competitor-gap-auditor` → `seo-audit-report-writer`),
+  distinct from `search`'s general-mode ongoing recommendations and from
+  `researcher`/`search`'s MAP-mode one-time audit — this is for a
+  dedicated audit ask (sales-scoping, quarterly deep-dive)
+- **4-agent AI visibility check team** — measures whether a brand is
+  *currently* cited by AI assistants (`ai-visibility-orchestrator` →
+  `ai-visibility-query-designer` → `ai-visibility-checker` →
+  `ai-visibility-report-writer`), distinct from `aeo-geo-auditor` which
+  audits *readiness* to be cited, not current citation reality. Honest
+  about a real limitation: only Google AI Overviews and web-findable
+  signals are directly checkable from this environment — ChatGPT/
+  Perplexity/Gemini/Claude's live chat answers are not, and every report
+  from this team must say so explicitly rather than guessing at what
+  those systems "probably" say.
+- **4-agent FAQ generation team** — `faq-orchestrator` →
+  `faq-question-researcher` → `faq-writer` → `faq-schema-qa`, grounded in
+  real search behaviour and the `faq-writing-geo-aeo-seo` skill, checked
+  against `approved-claims.md`/`restrictions.md` before reaching a human
+
+All four deliverable-team orchestrators share the same orchestration
+constraint as `agency-lead`/`map-orchestrator` (see below) — no working
+`Agent` tool once invoked as a subagent, self-execution is the only mode
+that exists in that case, real parallel dispatch requires the top-level
+session driving it directly.
+
+## MAP methodology — newer authoritative source
+
+`.claude/skills/marketing-action-plan/references/pg-map-creation-standards.md`
+captures the `pg-map-creation` account-level skill — Kelly's own captured
+process from a real completed engagement (Companion Software MAP,
+Aug-Sep 2026), postdating and more current in places than the rest of
+this skill's reference material (which was built from the master template
+and Lynda's process transcript before any real MAP had gone through this
+pipeline). It's now wired into `map-orchestrator`, `map-document-assembly`,
+`map-qa-compliance`, `researcher` (MAP mode), and `strategist` (MAP mode)
+— voice rules (no italics, no em dashes, sentence case headings, third
+person, no AI vocabulary), a real quality checklist from Lynda's own
+annotations, escalation rules, and methodology upgrades benchmarked
+against Dunford/Binet & Field/McKinsey CDJ/Gartner. Where it conflicts
+with `map-structure.md`'s detailed section list, see that file's
+"Reconciling with map-structure.md" section — both are legitimate, MAP
+structure is genuinely engagement-specific.
 
 Phase 1 (the core loop — Agency Lead, Client Intelligence, Researcher,
 Strategist, Content, Brand QA) and Phase 2/3 (Account Manager, Social,

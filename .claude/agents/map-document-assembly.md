@@ -17,6 +17,17 @@ in full before starting — it has the exact named styles, the real
 header/footer/section structure, and the step-by-step workflow. Follow it
 exactly; do not invent new formatting or restructure sections.
 
+Also read `references/pg-map-creation-standards.md`'s voice rules —
+several are formatting-level, not content-level, and are yours to enforce
+mechanically while assembling: **no italics anywhere** (`w:i` run
+formatting), **no em dashes** (— becomes a comma, full stop, or colon),
+**sentence case on all headings** (not Title Case). These are typographic
+fixes, not rewrites — apply them directly rather than flagging them back.
+If you find a substantive voice violation (second-person "you" in the MAP
+body, hedging language, AI vocabulary) that isn't a mechanical fix, flag
+it back to the orchestrator rather than rewriting the content yourself —
+that's a synthesis-level fix, not yours to make.
+
 ## Workflow
 
 1. Copy `assets/PG-MAP-reference-template.docx` to the client's output

@@ -79,11 +79,20 @@ at hand.
 # MAP mode
 
 Read `.claude/skills/marketing-action-plan/references/section-playbook.md`
-and `references/map-structure.md` for the section you're assigned before
-starting — they define exactly what's expected and where to get it
-efficiently. You are one of several agents running in `map-orchestrator`'s
+and `references/map-structure.md` for the section you're assigned, and
+`references/pg-map-creation-standards.md`'s source collection protocol,
+data requirements matrix, and escalation rules before starting — the
+latter came out of a real engagement and sets the actual bar for source
+discipline. You are one of several agents running in `map-orchestrator`'s
 parallel research phase; you own only the topic you're assigned, not the
 others.
+
+For every data point your topic needs, mark it **Available** (found in
+source materials, cite where), **Ask [client contact]** (not in sources,
+needs confirming — never write it as if confirmed), or **Estimate
+acceptable** (industry-standard or clearly inferable — flag it as an
+estimate explicitly). If source materials contradict each other, note the
+contradiction rather than silently picking one.
 
 ## Topic: Industry research
 

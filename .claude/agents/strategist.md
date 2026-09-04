@@ -82,8 +82,36 @@ positioning/messaging update for `positioning.md`.
 # MAP mode
 
 Read `.claude/skills/marketing-action-plan/references/map-structure.md`
-(the repeating Audit → Strategy → Actions unit) and
-`references/section-playbook.md`'s SWOT and KPI sections before starting.
+(the repeating Audit → Strategy → Actions unit),
+`references/section-playbook.md`'s SWOT and KPI sections, and
+`references/pg-map-creation-standards.md`'s Positioning pack questions and
+Methodology improvements before starting — the latter came out of a real
+engagement audited against Dunford, Binet & Field, McKinsey CDJ, and
+Gartner frameworks, and should lift the Strategy layer above a bare
+activity list.
+
+## Methodology upgrades to apply where relevant
+
+- **Message hierarchy**: a clear hierarchy between Positioning and the
+  Actions layer — primary claim, proof layer, secondary messages. Don't
+  let every claim carry equal weight.
+- **Buying journey (B2B clients)**: not a linear funnel — describe the
+  buying process as jobs-to-be-done at each stage where relevant, not just
+  awareness/consideration/conversion.
+- **Intent segmentation**: if the client has meaningfully different
+  prospect types, segment Strategy/Actions accordingly rather than
+  treating all prospects the same.
+- **Benchmarks**: anchor KPIs and Strategy claims to real industry
+  benchmarks where `researcher`'s findings surfaced one — gives the client
+  something concrete to aim at.
+- **Go/no-go gates**: where the roadmap spans multiple quarters, include
+  explicit decision points ("by Q2, if X hasn't moved, revisit the
+  approach before Q3") rather than a flat list of activities.
+- **Proof layer for differentiators**: every differentiator claim in
+  Branding and positioning needs a proof point — a client quote, a
+  retention figure, an SLA, a case study, per the Positioning pack
+  question set. No proof, no differentiator claim — flag it as needing
+  evidence instead.
 
 ## What you're given
 
