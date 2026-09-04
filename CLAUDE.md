@@ -9,22 +9,73 @@ instead of restating it.
 
 ## Current build status
 
-**All 12 agents are built.** Phase 1 (the core loop — Agency Lead, Client
-Intelligence, Researcher, Strategist, Content, Brand QA) and Phase 2/3
-(Account Manager, Social, Search Visibility, Paid Media, Creative
-Director, Analytics & Reporting) all exist under `.claude/agents/`.
+**16 agent files** under `.claude/agents/` — 12 agency-team roles, 4 of
+which double as MAP pipeline agents (see "Consolidated agents" below), plus
+4 MAP-only mechanical agents (orchestrator, actions/calendar, document
+assembly, QA gate) with no agency-team equivalent.
 
-The spec's own guidance was to prove Phase 1 reliably before adding the
-rest. A first end-to-end dry run (dummy client, Agency Lead through
-Client Intelligence → Researcher → Strategist → Content → Brand QA) has
-happened and validated the core discipline — Client Brain built correctly
-from `_TEMPLATE`, no invented facts, `UNKNOWN` used instead of guessing,
-client-named-competitors-only held, Brand QA caught a real gap instead of
-waving it through. It also surfaced the orchestration constraint below,
-which has since been fixed in `agency-lead.md`/`map-orchestrator.md`. This
-was one dry run on a fictional client, not production validation — Phase
-2/3 agents (Account Manager, Social, Search, Paid Media, Creative,
-Analytics) remain untested until each has run on a real task.
+Phase 1 (the core loop — Agency Lead, Client Intelligence, Researcher,
+Strategist, Content, Brand QA) and Phase 2/3 (Account Manager, Social,
+Search Visibility, Paid Media, Creative Director, Analytics & Reporting)
+are all built. The spec's own guidance was to prove Phase 1 reliably
+before adding the rest. A first end-to-end dry run (dummy client, Agency
+Lead through Client Intelligence → Researcher → Strategist → Content →
+Brand QA) has happened and validated the core discipline — Client Brain
+built correctly from `_TEMPLATE`, no invented facts, `UNKNOWN` used
+instead of guessing, client-named-competitors-only held, Brand QA caught a
+real gap instead of waving it through. It also surfaced the orchestration
+constraint below, which has since been fixed in
+`agency-lead.md`/`map-orchestrator.md`. This was one dry run on a
+fictional client, not production validation — Phase 2/3 agents (Account
+Manager, Social, Search, Paid Media, Creative, Analytics) remain untested
+until each has run on a real task.
+
+## Consolidated agents — one file, two modes
+
+The MAP pool originally had 13 agents, several of which duplicated an
+agency-team agent's expertise under a different operating constraint (a
+one-shot audit fixed to a document template vs. ongoing freeform client
+work). Audited and merged into four files, each with a **general mode**
+(default — ongoing agency work) and a **MAP mode** (invoked by
+`map-orchestrator` with a specific topic assignment, audit/synthesis only,
+tied to the MAP document's exact structure):
+
+- **`researcher`** — general mode unchanged; MAP mode covers six topics
+  that used to be six separate files: industry research, competitor
+  research, brand & positioning audit, traditional marketing & customer
+  experience audit, target market & customer journey, digital channels
+  audit. `map-orchestrator` invokes it once per topic.
+- **`strategist`** — general mode unchanged; MAP mode is what
+  `map-strategy-synthesis` used to be (Strategy layer, SWOT, KPIs — runs
+  only after every research topic above has returned).
+- **`search`** — general mode unchanged; MAP mode is what
+  `map-website-seo-geo-audit` used to be (one-shot Website/SEO
+  content/GEO content audit).
+- **`social`** — general mode unchanged; MAP mode is what
+  `map-social-audit` used to be (one-shot per-platform checklist audit,
+  no strategy).
+
+Why this was safe to merge and not just cosmetic: every absorbed MAP
+agent's tool list was a strict subset of its merge target's (none needed
+`Write`; the general-mode agent already had it and simply doesn't use it
+in MAP mode), and the underlying skill in every case was genuinely the
+same — "gather current-state facts against a defined checklist, cite
+sources, don't invent" for the `researcher` topics, SEO/GEO expertise for
+`search`, social-platform expertise for `social`, turning research into
+recommendations for `strategist`. Parallelism in `map-orchestrator`'s
+research phase isn't lost — it invokes the same agent file multiple times
+with different topic-scoped prompts, which works identically to invoking
+different files.
+
+**Not merged, deliberately**: `map-orchestrator`, `map-actions-calendar`,
+`map-document-assembly`, `map-qa-compliance` have no agency-team
+equivalent (docx assembly, template-comment stripping, calendar
+reconciliation) — genuinely MAP-only mechanics, nothing to consolidate
+into. `brand-qa` and `map-qa-compliance` were considered and kept separate
+— one reviews prose for brand/accuracy/AI-quality/risk, the other verifies
+a docx file's structural integrity; different skill types, and combining
+them risked one being shortchanged when the other dominates a given
+review.
 
 ## Orchestration constraint — read before invoking agency-lead or map-orchestrator
 

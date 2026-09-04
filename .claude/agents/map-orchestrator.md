@@ -23,21 +23,25 @@ depth. This is not a fallback for an edge case: it is the only mode you
 ever run in once invoked as a subagent via the `Agent` tool.
 
 **You self-execute every phase in one process.** Everywhere Steps 2-4
-below say "spawn"/"dispatch"/"pass to" a `map-*` agent, that means: open
-and follow that agent's `.claude/agents/map-*.md` file as your own
-instructions for that phase, in the same dependency order described —
-research phases (Step 2) before synthesis (Step 3), synthesis before
-assembly/QA (Step 4). State plainly in your final report that no genuine
-agent isolation occurred — Brand-QA-equivalent (`map-qa-compliance`)
-checking `map-document-assembly`'s work is the same context checking its
-own output in this mode, not an independent second pass.
+below say "spawn"/"dispatch"/"pass to" an agent, that means: open and
+follow that agent's file **in the mode specified** (`researcher`,
+`search`, and `social` each have a MAP mode section distinct from their
+default general-purpose mode — use MAP mode, scoped to the one topic
+named, not the general-purpose instructions) as your own instructions for
+that phase, in the same dependency order described — research phases
+(Step 2) before synthesis (Step 3), synthesis before assembly/QA (Step 4).
+State plainly in your final report that no genuine agent isolation
+occurred — Brand-QA-equivalent (`map-qa-compliance`) checking
+`map-document-assembly`'s work is the same context checking its own
+output in this mode, not an independent second pass.
 
 **If a task genuinely needs real agent isolation** — most importantly, an
 independent QA pass that isn't grading its own assembly work — that can
 only happen if the **top-level session** (the human's actual Claude Code
-conversation) calls each `map-*` agent directly, using Steps 1-5 below as
-the plan. That's outside your control as a subagent; say so rather than
-implying independent review happened when it didn't.
+conversation) calls each agent directly (in the mode specified per step),
+using Steps 1-5 below as the plan. That's outside your control as a
+subagent; say so rather than implying independent review happened when it
+didn't.
 
 Before your first run, read the skill's reference set once so you know the
 target shape of the deliverable:
@@ -66,38 +70,49 @@ intake tool/Supabase, or pasted directly). Check it against
 
 ## Step 2 — Research agents (as a subagent: work through these yourself, in any order; from the top-level session: fan out in parallel)
 
+Research in this pipeline is done by three agents, each carrying a **MAP
+mode** alongside their general-purpose mode — `researcher` (six topic
+assignments), `search` (one), `social` (one). Each file's MAP mode section
+has the full topic-specific instructions; this step just tells you which
+topics to cover and in what shape.
+
 If the top-level session is driving this and can call `Agent` directly,
-these can run in parallel with the client's name/industry/URL, the
-relevant discovery-form data, and the conditional-section decisions from
-Step 1 — none of them depend on each other's output. If you're
-self-executing (the case whenever you were invoked as a subagent), work
-through each one's file in turn instead — order among these eight doesn't
-matter, only that all of them finish before Step 3 starts:
+these can run in parallel — one call per topic below, each in MAP mode,
+with the client's name/industry/URL, the relevant discovery-form data, and
+the conditional-section decisions from Step 1. None of them depend on each
+other's output. If you're self-executing (the case whenever you were
+invoked as a subagent), work through each topic in turn instead — order
+doesn't matter, only that all of them finish before Step 3 starts.
 
-- `map-industry-research`
-- `map-competitor-research`
-- `map-website-seo-geo-audit`
-- `map-social-audit`
-- `map-digital-channels`
-- `map-brand-positioning`
-- `map-traditional-marketing`
-- `map-target-market-journey`
+Topics, and which file's MAP mode covers each:
 
-Each returns structured Audit findings (and source evidence/citations) for
-its topics. Collect all of them before moving on — Step 3 cannot start with
-partial research, because the Strategy Synthesis agent needs the full
-picture to spot real gaps rather than inventing them per-topic in isolation.
+- `researcher` (MAP mode) → **Industry research**
+- `researcher` (MAP mode) → **Competitor research**
+- `researcher` (MAP mode) → **Brand & positioning audit**
+- `researcher` (MAP mode) → **Traditional marketing & customer experience audit**
+- `researcher` (MAP mode) → **Target market & customer journey**
+- `researcher` (MAP mode) → **Digital channels audit** (SEM/eDM/GBP/citations/reviews/third-party)
+- `search` (MAP mode) → **Website, SEO content, and GEO content audit**
+- `social` (MAP mode) → **Per-platform social audit**
 
-If any research agent reports a data source it couldn't reach (no SEMrush
+That's eight topic outputs from three agent files (`researcher` covers six
+of them — invoke it once per topic, each call scoped to exactly one topic
+so its output stays that topic's shape, not a blend of all six). Each
+returns structured Audit findings (and source evidence/citations) for its
+topic. Collect all eight before moving on — Step 3 cannot start with
+partial research, because `strategist` (MAP mode) needs the full picture
+to spot real gaps rather than inventing them per-topic in isolation.
+
+If any research call reports a data source it couldn't reach (no SEMrush
 access, no social login, etc.), retry once; if it still fails, accept the
 gap and carry it forward as a noted limitation — don't loop indefinitely.
 
 ## Step 3 — Synthesis (sequential, after Step 2 completes)
 
-Pass the full collected Audit output to `map-strategy-synthesis`. This agent
+Pass the full collected Audit output to `strategist` in **MAP mode**. It
 writes the Strategy paragraphs, the SWOT (done only once research is
 complete, never before), and sets KPIs. It must not run until every Step 2
-agent has returned.
+topic has returned.
 
 Then pass its output to `map-actions-calendar`, which consolidates every
 Actions callout box into the Marketing and communication calendar and
